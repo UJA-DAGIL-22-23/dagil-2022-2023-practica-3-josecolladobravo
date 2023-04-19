@@ -179,7 +179,12 @@ Plantilla.recupera = async function (callBackFn) {
     }
 }
 
+/**
+ * Función para mostrar en pantalla solo los nombres de todas las personas que se han recuperado de la BBDD.
+ * @param {Vector_de_personas} vector Vector con los nombres de las personas a mostrar
+ */
 Plantilla.imprimeSoloNombres = function (vector) {
+
     // Compongo el contenido que se va a mostrar dentro de la tabla
     let msj = Plantilla.plantillaTablaPersonasSoloNombres.cabecera
     vector.forEach(e => msj += Plantilla.plantillaTablaPersonasSoloNombres.actualiza(e))
@@ -190,11 +195,36 @@ Plantilla.imprimeSoloNombres = function (vector) {
 }
 
 /**
- * Función principal para recuperar las personas desde el MS y, posteriormente, imprimirlas.
+ * Función para mostrar en pantalla los nombres de todas las personas que se han recuperado de la BBDD pero ORDENADOS ALFABÉTICAMENTE.
+ * @param {Vector_de_personas} vector Vector con los datos de las personas a mostrar
+ */
+Plantilla.imprimeSoloNombresOrdenados = function (vector) {
+
+    vector.sort(function (a, b) {
+        return a.data.nombre.localeCompare(b.data.nombre);
+    });
+
+    // Compongo el contenido que se va a mostrar dentro de la tabla
+    let msj = Plantilla.plantillaTablaPersonasSoloNombres.cabecera
+    vector.forEach(e => msj += Plantilla.plantillaTablaPersonasSoloNombres.actualiza(e))
+    msj += Plantilla.plantillaTablaPersonasSoloNombres.pie
+
+    // Borro toda la info de Article y la sustituyo por la que me interesa
+    Frontend.Article.actualizar("Listado de solo nombres de jugadores/as", msj)
+}
+
+/**
+ * Función principal para recuperar solo los nombres de las personas desde el MS y, posteriormente, imprimirlas.
  */
 Plantilla.listarSoloNombres = function () {
     Plantilla.recupera(Plantilla.imprimeSoloNombres);
 }
 
+/**
+ * Función principal para recuperar solo los nombres las personas desde el MS ORDENADO ALFABÉTICAMENTE y, posteriormente, imprimirlas.
+ */
+Plantilla.listarSoloNombresOrdenados = function () {
+    Plantilla.recupera(Plantilla.imprimeSoloNombresOrdenados);
+}
 
 
