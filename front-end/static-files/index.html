@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Aplicación Microservicios Plantilla</title>
+    <title>Aplicación Jugadores/as Waterpolo</title>
 
     <!-- Cargamos biblioteca Jasmine -->
 
@@ -15,43 +15,42 @@
     <!-- Cargamos nuestros CSS -->
     <link rel="stylesheet" href="css/front-end.css">
 
-
 </head>
 
 <body>
-    <h1>Aplicación Microservicios Plantilla</h1>
+    <h1>Aplicación Jugadores/as Waterpolo</h1>
     <!-- Barra de navegación de la aplicación -->
     <nav>
-        <a href="javascript:Plantilla.procesarHome()" class="opcion-principal"
-            title="Llama a la ruta / del MS Plantilla">Home</a>
-        <a href="javascript:Plantilla.procesarAcercaDe()" class="opcion-principal"
-            title="Llama a la ruta /acercade del MS Plantilla">Acerca de</a>
+                <a href="javascript:Plantilla.procesarHome()" class="opcion-principal"
+                title="Llama a la ruta / del MS Plantilla">Home</a>
+                <a href="javascript:Plantilla.procesarAcercaDe()" class="opcion-principal"
+                title="Llama a la ruta /acercade del MS Plantilla">Acerca de</a>
+                <a href="javascript:Plantilla.listarSoloNombres()" class="opcion-principal mostrar"
+                title="Realiza un listado de solo los nomnbres de todos/as los/as jugadores/as que hay en la BBDD">Listar solo nombres jugadores/as</a>
     </nav>
 
     <!-- 
         Article en el que se va a mostrar la info cuando se pinche una opción del menú 
         Todos los apartados de este article se rellenarán con funciones en Javascript
     -->
-    <article id="seccion-principal">
+    <article id="seccion-principal class="ocultar">
         <!-- Título del article -->
         <h2 id="seccion-principal-titulo"></h2>
         <!-- Contenido del article -->
         <div id="seccion-principal-contenido">
+            <div id="tabla-formulario-persona" class="ocultar"></div>
         </div>
     </article>
-
 
     <!-- 
         ...............  ZONA DE CARGA DE FICHEROS JS .........................
     
         Debe ponerse al final del documento para que estén creados los elementos del DOM.
-        
     -->
 
     <!-- Cargamos ficheros JS propios del proyecto -->
     <script src="js/front-end.js"></script>
     <script src="js/ms-plantilla.js"></script>
-
 
     <!-- Cargamos ficheros spec con los tests -->
     <script src="js/front-end-spec.js"></script>

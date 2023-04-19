@@ -7,17 +7,15 @@
  * @date 03-feb-2023
  */
 
-
-
 // Necesario para conectar a la BBDD faunadb
 const faunadb = require('faunadb'),
     q = faunadb.query;
 
 const client = new faunadb.Client({
-    secret: '¿¿¿ CLAVE SECRETA EN FAUNA PARA ESTA BBDD???',
+    secret: 'fnAFACklaPACWZZiWO8Cgyg-QiU5NtuOY8-jzutk',
 });
 
-const COLLECTION = "¿¿¿ COLECCION ???"
+const COLLECTION = "jugadores"
 
 // CALLBACKS DEL MODELO
 
@@ -36,7 +34,6 @@ function CORS(res) {
         )
     return res;
 }
-
 
 /**
  * Objeto que contiene las funciones callback para interactuar con el modelo (e.d., la BBDD)
@@ -61,9 +58,29 @@ const CB_MODEL_SELECTS = {
         }
     },
 
+    /**
+     * Método para obtener todas las personas de la BBDD.
+     * @param {*} req Objeto con los parámetros que se han pasado en la llamada a esta URL 
+     * @param {*} res Objeto Response con las respuesta que se va a dar a la petición recibida
+     */
+    getTodas: async (req, res) => {
+        try {
+            let personas = await client.query(
+                q.Map(
+                    q.Paginate(q.Documents(q.Collection(COLLECTION))),
+                    q.Lambda("X", q.Get(q.Var("X")))
+                )
+            )
+            // console.log( personas ) // Para comprobar qué se ha devuelto en personas
+            CORS(res)
+                .status(200)
+                .json(personas)
+        } catch (error) {
+            CORS(res).status(500).json({ error: error.description })
+        }
+    },
+
 }
-
-
 
 // CALLBACKS ADICIONALES
 
