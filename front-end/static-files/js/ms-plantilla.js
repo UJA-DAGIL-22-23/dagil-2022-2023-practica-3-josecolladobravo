@@ -25,10 +25,10 @@ Plantilla.plantillaTagsSoloNombres = {
 
 
 // Plantilla para poner los datos de varias personas dentro de una tabla
-Plantilla.plantillaTablaPersonasSoloNombres = {}
+Plantilla.plantillaTablaPersonasTodosLosDatosSoloNombres = {}
 
 // Cabecera de la tabla
-Plantilla.plantillaTablaPersonasSoloNombres.cabecera = `<table width="100%" class="listado-personas-SoloNombres">
+Plantilla.plantillaTablaPersonasTodosLosDatosSoloNombres.cabecera = `<table width="100%" class="listado-personas-SoloNombres">
                     <thead>
                         <th width="20%">Nombres</th>
                     </thead>
@@ -36,7 +36,7 @@ Plantilla.plantillaTablaPersonasSoloNombres.cabecera = `<table width="100%" clas
     `;
 
 // Elemento TR que muestra los datos de una persona
-Plantilla.plantillaTablaPersonasSoloNombres.cuerpo = `
+Plantilla.plantillaTablaPersonasTodosLosDatosSoloNombres.cuerpo = `
     <tr title="${Plantilla.plantillaTagsSoloNombres.ID}">
         <td>${Plantilla.plantillaTagsSoloNombres.NOMBRE}</td>
         </td>
@@ -44,7 +44,7 @@ Plantilla.plantillaTablaPersonasSoloNombres.cuerpo = `
     `;
     
 // Pie de la tabla
-Plantilla.plantillaTablaPersonasSoloNombres.pie = `        </tbody>
+Plantilla.plantillaTablaPersonasTodosLosDatosSoloNombres.pie = `        </tbody>
              </table>
              `;
 
@@ -54,7 +54,7 @@ Plantilla.plantillaTablaPersonasSoloNombres.pie = `        </tbody>
  * @param {Persona} Persona Objeto con los datos de la persona que queremos escribir en el TR
  * @returns La plantilla del cuerpo de la tabla con los datos actualizados 
  */           
-Plantilla.sustituyeTags = function (plantilla, persona) {
+Plantilla.sustituyeTagsTodosLosDatosSoloNombres = function (plantilla, persona) {
     return plantilla
         .replace(new RegExp(Plantilla.plantillaTagsSoloNombres.NOMBRE, 'g'), persona.data.nombre)
 }             
@@ -64,8 +64,8 @@ Plantilla.sustituyeTags = function (plantilla, persona) {
  * @param {Persona} Persona Objeto con los datos de la persona que queremos escribir en el TR
  * @returns La plantilla del cuerpo de la tabla con los datos actualizados 
  */
-Plantilla.plantillaTablaPersonasSoloNombres.actualiza = function (persona) {
-    return Plantilla.sustituyeTags(this.cuerpo, persona)
+Plantilla.plantillaTablaPersonasTodosLosDatosSoloNombres.actualiza = function (persona) {
+    return Plantilla.sustituyeTagsTodosLosDatosSoloNombres(this.cuerpo, persona)
 }
 
 /**
@@ -186,9 +186,9 @@ Plantilla.recupera = async function (callBackFn) {
 Plantilla.imprimeSoloNombres = function (vector) {
 
     // Compongo el contenido que se va a mostrar dentro de la tabla
-    let msj = Plantilla.plantillaTablaPersonasSoloNombres.cabecera
-    vector.forEach(e => msj += Plantilla.plantillaTablaPersonasSoloNombres.actualiza(e))
-    msj += Plantilla.plantillaTablaPersonasSoloNombres.pie
+    let msj = Plantilla.plantillaTablaPersonasTodosLosDatosSoloNombres.cabecera
+    vector.forEach(e => msj += Plantilla.plantillaTablaPersonasTodosLosDatosSoloNombres.actualiza(e))
+    msj += Plantilla.plantillaTablaPersonasTodosLosDatosSoloNombres.pie
 
     // Borro toda la info de Article y la sustituyo por la que me interesa
     Frontend.Article.actualizar("Listado de solo nombres de jugadores/as", msj)
@@ -205,9 +205,9 @@ Plantilla.imprimeSoloNombresOrdenados = function (vector) {
     });
 
     // Compongo el contenido que se va a mostrar dentro de la tabla
-    let msj = Plantilla.plantillaTablaPersonasSoloNombres.cabecera
-    vector.forEach(e => msj += Plantilla.plantillaTablaPersonasSoloNombres.actualiza(e))
-    msj += Plantilla.plantillaTablaPersonasSoloNombres.pie
+    let msj = Plantilla.plantillaTablaPersonasTodosLosDatosSoloNombres.cabecera
+    vector.forEach(e => msj += Plantilla.plantillaTablaPersonasTodosLosDatosSoloNombres.actualiza(e))
+    msj += Plantilla.plantillaTablaPersonasTodosLosDatosSoloNombres.pie
 
     // Borro toda la info de Article y la sustituyo por la que me interesa
     Frontend.Article.actualizar("Listado de solo nombres de jugadores/as", msj)
@@ -227,4 +227,97 @@ Plantilla.listarSoloNombresOrdenados = function () {
     Plantilla.recupera(Plantilla.imprimeSoloNombresOrdenados);
 }
 
+// Tags que voy a usar para sustituir todos los campos
+Plantilla.plantillaTagsTodosLosDatos = {
+    "ID": "### ID ###",
+    "NOMBRE": "### NOMBRE ###",
+    "APELLIDOS": "### APELLIDOS ###",
+    "FEC_NAC": "### FEC_NAC ###",
+    "COMPETICIONES": "### COMPETICIONES ###",
+    "NACIONALIDAD": "### NACIONALIDAD ###",
+    "PESO": "### PESO ###",
+    "POSICION": "### POSICION ###",
+}
 
+
+/// Plantilla para poner todos los datos de todos/as los/as jugadores/as dentro de una tabla
+Plantilla.plantillaTablaPersonasTodosLosDatos = {}
+
+// Cabecera de la tabla que muestra todos los datos de todos/as los/as jugadores/as
+Plantilla.plantillaTablaPersonasTodosLosDatos.cabecera = `<table width="100%" class="listado-personas-SoloNombres">
+                    <thead>
+                        <th width="10%">Id</th>
+                        <th width="20%">Nombre</th>
+                        <th width="20%">Apellidos</th>
+                        <th width="10%">fecha nacimiento</th>
+                        <th width="15%">Competiciones</th>
+                        <th width="15%">Nacionalidad</th>
+                        <th width="15%">Peso</th>
+                        <th width="15%">Posición</th>
+                    </thead>
+                    <tbody>
+    `;
+
+// Elemento TR que muestra todos los datos de todos/as los/as jugadores/as
+Plantilla.plantillaTablaPersonasTodosLosDatos.cuerpo = `
+    <tr title="${Plantilla.plantillaTagsTodosLosDatos.ID}">
+        <td>${Plantilla.plantillaTagsTodosLosDatos.ID}</td>
+        <td>${Plantilla.plantillaTagsTodosLosDatos.NOMBRE}</td>
+        <td>${Plantilla.plantillaTagsTodosLosDatos.APELLIDOS}</td>
+        <td>${Plantilla.plantillaTagsTodosLosDatos.FEC_NAC}</td>
+        <td>${Plantilla.plantillaTagsTodosLosDatos.COMPETICIONES}</td>
+        <td>${Plantilla.plantillaTagsTodosLosDatos.NACIONALIDAD}</td>
+        <td>${Plantilla.plantillaTagsTodosLosDatos.PESO}</td>
+        <td>${Plantilla.plantillaTagsTodosLosDatos.POSICION}</td>
+    </tr>
+    `;
+
+// Pie de la tabla de todos los datos de todos/as los/as jugadores/as
+Plantilla.plantillaTablaPersonasTodosLosDatos.pie = `        </tbody>
+             </table>
+             `;
+
+/**
+ * Actualiza el cuerpo de la plantilla deseada con los datos del jugador/as que se le pasa
+ * @param {String} Plantilla Cadena conteniendo HTML en la que se desea cambiar los campos de la plantilla por datos
+ * @param {Persona} Persona Objeto con los datos del jugador/as que queremos escribir en el TR
+ * @returns La plantilla del cuerpo de la tabla con los datos actualizados 
+ */           
+Plantilla.sustituyeTagsTodosLosDatos = function (plantilla, persona) {
+    return plantilla
+        .replace(new RegExp(Plantilla.plantillaTagsTodosLosDatos.ID, 'g'), persona.ref['@ref'].id)
+        .replace(new RegExp(Plantilla.plantillaTagsTodosLosDatos.NOMBRE, 'g'), persona.data.nombre)
+        .replace(new RegExp(Plantilla.plantillaTagsTodosLosDatos.APELLIDOS, 'g'), persona.data.apellidos)
+        .replace(new RegExp(Plantilla.plantillaTagsTodosLosDatos.NACIONALIDAD, 'g'), persona.data.nacionalidad)
+        .replace(new RegExp(Plantilla.plantillaTagsTodosLosDatos.PESO, 'g'), persona.data.peso)
+        .replace(new RegExp(Plantilla.plantillaTagsTodosLosDatos.POSICION, 'g'), persona.data.posicion)
+        .replace(new RegExp(Plantilla.plantillaTagsTodosLosDatos.COMPETICIONES, 'g'), persona.data.competiciones)
+        .replace(new RegExp(Plantilla.plantillaTagsTodosLosDatos.FEC_NAC, 'g'), persona.data.fec_nac.dia + "/" + persona.data.fec_nac.mes + "/" + persona.data.fec_nac.anio)
+}            
+
+/**
+ * Actualiza el cuerpo de la tabla con todos los datos de todos/as los/as jugadores/as que se le pasa
+ * @param {Persona} Persona Objeto con todos los datos del jugador/a que queremos escribir en el TR
+ * @returns La plantilla del cuerpo de la tabla con los datos actualizados 
+ */
+Plantilla.plantillaTablaPersonasTodosLosDatos.actualiza = function (persona) {
+    return Plantilla.sustituyeTagsTodosLosDatos(this.cuerpo, persona)
+}
+
+Plantilla.listarTodosLosDatos = function (vector) {
+    
+    // Compongo el contenido que se va a mostrar dentro de la tabla
+    let msj = Plantilla.plantillaTablaPersonasTodosLosDatos.cabecera
+    vector.forEach(e => msj += Plantilla.plantillaTablaPersonasTodosLosDatos.actualiza(e))
+    msj += Plantilla.plantillaTablaPersonasTodosLosDatos.pie
+
+    // Borro toda la info de Article y la sustituyo por la que me interesa
+    Frontend.Article.actualizar("Listado de todos los datos de todos/as los/as jugadores/as", msj)
+}
+
+/**
+ * Función principal para recuperar todo los datos de todos/as los/as jugadores/as desde el MS y, posteriormente, imprimirlas.
+ */
+Plantilla.listarTodoLosDatos = function () {
+    Plantilla.recupera(Plantilla.listarTodosLosDatos);
+}
