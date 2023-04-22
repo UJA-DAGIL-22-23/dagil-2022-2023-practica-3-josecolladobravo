@@ -143,6 +143,7 @@ Plantilla.mostrarAcercaDe = function (datosDescargados) {
  * Función principal para responder al evento de elegir la opción "Home"
  */
 Plantilla.procesarHome = function () {
+    porCampo.style.display = 'none';
     this.descargarRuta("/plantilla/", this.mostrarHome);
 }
 
@@ -150,6 +151,7 @@ Plantilla.procesarHome = function () {
  * Función principal para responder al evento de elegir la opción "Acerca de"
  */
 Plantilla.procesarAcercaDe = function () {
+    porCampo.style.display = 'none';
     this.descargarRuta("/plantilla/acercade", this.mostrarAcercaDe);
 }
 
@@ -217,6 +219,7 @@ Plantilla.imprimeSoloNombresOrdenados = function (vector) {
  * Función principal para recuperar solo los nombres de las personas desde el MS y, posteriormente, imprimirlas.
  */
 Plantilla.listarSoloNombres = function () {
+    porCampo.style.display = 'none';
     Plantilla.recupera(Plantilla.imprimeSoloNombres);
 }
 
@@ -224,6 +227,7 @@ Plantilla.listarSoloNombres = function () {
  * Función principal para recuperar solo los nombres las personas desde el MS ORDENADO ALFABÉTICAMENTE y, posteriormente, imprimirlas.
  */
 Plantilla.listarSoloNombresOrdenados = function () {
+    porCampo.style.display = 'none';
     Plantilla.recupera(Plantilla.imprimeSoloNombresOrdenados);
 }
 
@@ -243,6 +247,9 @@ Plantilla.plantillaTagsTodosLosDatos = {
 /// Plantilla para poner todos los datos de todos/as los/as jugadores/as dentro de una tabla
 Plantilla.plantillaTablaPersonasTodosLosDatos = {}
 
+/// Plantilla para poner todos los datos de todos/as los/as jugadores/as dentro de una tabla
+Plantilla.plantillaTablaPersonasTodosLosDatosSINID = {}
+
 // Cabecera de la tabla que muestra todos los datos de todos/as los/as jugadores/as
 Plantilla.plantillaTablaPersonasTodosLosDatos.cabecera = `<table width="100%" class="listado-personas-SoloNombres">
                     <thead>
@@ -257,6 +264,20 @@ Plantilla.plantillaTablaPersonasTodosLosDatos.cabecera = `<table width="100%" cl
                     </thead>
                     <tbody>
     `;
+
+ // Cabecera de la tabla que muestra todos los datos de todos/as los/as jugadores/as
+Plantilla.plantillaTablaPersonasTodosLosDatosSINID.cabecera = `<table width="100%" class="listado-personas-SoloNombres">
+<thead>
+    <th width="20%">Nombre</th>
+    <th width="20%">Apellidos</th>
+    <th width="10%">fecha nacimiento</th>
+    <th width="15%">Competiciones</th>
+    <th width="15%">Nacionalidad</th>
+    <th width="15%">Peso</th>
+    <th width="15%">Posición</th>
+</thead>
+<tbody>
+`;   
 
 // Elemento TR que muestra todos los datos de todos/as los/as jugadores/as
 Plantilla.plantillaTablaPersonasTodosLosDatos.cuerpo = `
@@ -305,6 +326,7 @@ Plantilla.plantillaTablaPersonasTodosLosDatos.actualiza = function (persona) {
 }
 
 Plantilla.listarTodosLosDatos = function (vector) {
+    porCampo.style.display = 'none';
     
     // Compongo el contenido que se va a mostrar dentro de la tabla
     let msj = Plantilla.plantillaTablaPersonasTodosLosDatos.cabecera
@@ -320,4 +342,88 @@ Plantilla.listarTodosLosDatos = function (vector) {
  */
 Plantilla.listarTodoLosDatos = function () {
     Plantilla.recupera(Plantilla.listarTodosLosDatos);
+}
+
+/**
+ * Función que se activa cuando se pulsa el botón de ordenar por campo
+ */
+Plantilla.ordenarPor = function () {
+    const porCampo = document.querySelector('#porCampo');
+    porCampo.style.display = 'block';
+
+    porCampo.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const campo = document.querySelector('#campo').value;
+        this.muestraJugadoresOrdenadosPor(campo, this.imprimePor);
+    });
+}
+
+/**
+ * Función que muestra los/as jugadores/as ordena por un campo
+ * @param {String} campo campo por el que se ordenan los/as jugadores/as
+ * @param {*} callBackFn Función a la que se llamará una vez recibidos los datos.
+ */
+Plantilla.muestraJugadoresOrdenadosPor = async function (campo, callBackFn) {
+    try {
+        const url = Frontend.API_GATEWAY + "/plantilla/getTodas"
+        const response = await fetch(url);
+        if (response) {
+            const jugadores = await response.json()
+            callBackFn(campo, jugadores)
+        }
+    } catch (error) {
+        alert("Error: No se ha podido acceder al API Gateway")
+        console.error(error)
+    }
+}
+
+/**
+ * Función que imprime los/as jugadores/as ordenados por un campo
+ * @param {String} campo campo por el que se van a mostrar los datos
+ * @param {Vector_de_jugadores} vector Vector con los datos de los/as jugadores/as a mostrar
+ */
+Plantilla.imprimePor = function (campo, vector) {
+    //Ordeno los campos numericos de mayor a menor. Los alfabéticos se hacen solos con el .sort()
+    let ordena = vector.data.sort((a, b) => {
+        if (campo === "fec_nac") {
+            const fecha1 = new Date(a.data.fec_nac.anio, a.data.fec_nac.mes - 1, a.data.fec_nac.dia);
+            const fecha2 = new Date(b.data.fec_nac.anio, b.data.fec_nac.mes - 1, b.data.fec_nac.dia);
+            if (fecha1 < fecha2) {
+                return -1;
+              } else {
+                return 1;
+              }
+        } else if (campo === "peso") {
+            if (a.data[campo] > b.data[campo]) {
+                return -1;
+              } else {
+                return 1;
+              }
+        } else {
+            if (a.data[campo] < b.data[campo]) {
+                return -1;
+              } else {
+                return 1;
+              }
+        }
+    });
+
+    let msj = "";
+    msj += Plantilla.plantillaTablaPersonasTodosLosDatosSINID.cabecera;
+    ordena.forEach(e => msj += Plantilla.cuerpoTr(e));
+    msj += Plantilla.plantillaTablaPersonasTodosLosDatos.pie;
+
+    Frontend.Article.actualizar("Listado de los/as jugadores/as ordenados por el campo que el usuario ha elegido ", msj);
+}
+
+/**
+ * Lista la información del cuerpo de la tabla. Se hace un ajuste para la fecha debido a que en la base de datos se almacena como un objeto
+ * @param {p} p Datos del jugador/a a mostrar
+ * @returns El cuerpo de la tabla con los datos del jugador/a
+ */
+Plantilla.cuerpoTr = function (p) {
+    const d = p.data
+    const fecha = new Date(d.fec_nac.anio, d.fec_nac.mes - 1, d.fec_nac.dia);
+    const fechaFormateada = fecha.toLocaleDateString();
+    return `<tr><td>${d.nombre}</td><td>${d.apellidos}</td><td>${fechaFormateada}</td><td>${d.competiciones}</td><td>${d.nacionalidad}</td><td>${d.peso}</td><td>${d.posicion}</td></tr>`;
 }

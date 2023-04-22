@@ -341,3 +341,48 @@ Y a continuación voy a mostrar cada historia de usuario por dentro con su descr
 
 <img src='assets/img/HU5.png' width='600px'>
 
+
+Estas son las cinco historias de usuario que he seleccionado para el primer incremento. 
+
+Una vez hechas, el trello queda así: 
+
+### Foto Trello 1
+<img src='assets/img/PrimerIncrementoFinalTrello1.png' width='600px'>
+
+### Foto Trello 2
+<img src='assets/img/PrimerIncrementoFinalTrello2.png' width='600px'>
+
+Las historias de usuario seleccionadas para este primer incremento se han quedado así:
+
+### H.U 1
+1. Ver la información del autor/autora de la aplicación al pulsar en el botón “Acerca de”. VALOR: 0,1
+
+<img src='assets/img/AcercaDe.png' width='600px'>
+
+### H.U 2
+2. Ver un listado solo con los nombres de todos los jugadores/equipos. VALOR: 0,2
+
+<img src='assets/img/SoloNombre.png' width='600px'>
+
+### H.U 3
+3. Ver un listado solo con los nombres de todos los jugadores/equipos ordenados alfabéticamente. VALOR: 0,3
+
+<img src='assets/img/SoloNombresOrdenados.png' width='600px'>
+
+### H.U 4
+4. Ver un listado con todos los datos de todos los jugadores/equipos. VALOR: 0,4
+
+<img src='assets/img/ListarTodo.png' width='600px'>
+
+### H.U 5
+5. Ver un listado con todos los datos de todos los jugadores/equipos ordenado por el campo del jugador/equipo que el usuario desee. VALOR: 0,5
+
+
+<img src='assets/img/OrdenarPor.png' width='600px'>
+Formulario donde el usuario puede elegir por qué campo quiere ordenar los/as jugadores/as:
+<img src='assets/img/OrdenarPorForm.png' width='600px'>
+
+Ordenar por Fecha de Nacimiento:
+<img src='assets/img/OrdenarPorFec_Nac.png' width='600px'>
+
+Y hasta aquí el primer incremento. Vamos con el segundo.

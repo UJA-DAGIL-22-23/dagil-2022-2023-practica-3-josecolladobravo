@@ -8,13 +8,16 @@
  
  table.listado-personas-SoloNombres {
     width: 100%;
+    background-color: #1f1f1f;
+    color: #ffffff;
 }
 
 table.listado-personas-SoloNombres thead th {
     margin: 3px;
     height: 2.5em;
-    background-color: rgb(113, 201, 206);
+    background-color: #39444e;
     text-transform: uppercase;
+    color: #ffffff;
 }
 
 table.listado-personas-SoloNombres tbody td {
@@ -25,22 +28,22 @@ table.listado-personas-SoloNombres tbody td {
 table.listado-personas-SoloNombres tbody tr {
     margin: 3px;
     height: 2em;
-    background-color: rgb(203, 241, 245)
+    background-color: #3d3d3d;
 }
 
 .form-persona-elemento:disabled {
-    color: black;
+    color: #cccccc;
     background-color: inherit;
     border-width: 0px;
     text-align: center;
 }
 
 .form-persona-elemento:enabled {
-    color:rgba(0, 0, 100, 0.8);
+    color: #ffffff;
 }
 
 .form-persona-elemento:enabled:required {
-    color:rgba(100, 0, 0, 0.8);
+    color: #ff6347;
 }
 
 table.listado-personas-SoloNombres thead,
