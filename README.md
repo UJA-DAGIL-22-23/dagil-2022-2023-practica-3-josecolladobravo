@@ -1,4 +1,4 @@
-# Práctica 1
+# Práctica 3
 ## José Collado Bravo
 <img src='assets/img/jcollado.png' width='200px'>
 
