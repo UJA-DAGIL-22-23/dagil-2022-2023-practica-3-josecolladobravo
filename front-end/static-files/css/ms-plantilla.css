@@ -23,6 +23,7 @@ table.listado-personas-SoloNombres thead th {
 table.listado-personas-SoloNombres tbody td {
     padding: 0.5em;
     text-align: center;
+    color: #ffffff;
 }
 
 table.listado-personas-SoloNombres tbody tr {
@@ -32,7 +33,7 @@ table.listado-personas-SoloNombres tbody tr {
 }
 
 .form-persona-elemento:disabled {
-    color: #cccccc;
+    color: #ffffff;
     background-color: inherit;
     border-width: 0px;
     text-align: center;

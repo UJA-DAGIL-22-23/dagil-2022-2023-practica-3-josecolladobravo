@@ -71,7 +71,6 @@ const CB_MODEL_SELECTS = {
                     q.Lambda("X", q.Get(q.Var("X")))
                 )
             )
-            // console.log( personas ) // Para comprobar qué se ha devuelto en personas
             CORS(res)
                 .status(200)
                 .json(personas)
@@ -79,6 +78,23 @@ const CB_MODEL_SELECTS = {
             CORS(res).status(500).json({ error: error.description })
         }
     },
+
+    /** Función que obtiene un/a jugador/a de la BBDD a partir de su id
+    * @param {*} req Objeto con los parámetros que se han pasado en la llamada a esta URL 
+    * @param {*} res Objeto Response con las respuesta que se va a dar a la petición recibida
+    */
+        getPorId: async (req, res) => {
+            try {
+                let jugador = await client.query(
+                    q.Get(q.Ref(q.Collection(COLLECTION), req.params.id))
+                )
+                CORS(res)
+                    .status(200)
+                    .json(jugador)
+            } catch (error) {
+                CORS(res).status(500).json({ error: error.description })
+            }
+        },
 
 }
 

@@ -53,5 +53,16 @@ router.get("/getTodas", async (req, res) => {
     }
 });
 
+/**
+ * Obtiene un/a jugador/a por su ID
+ */
+router.get("/getPorId/:id", async (req, res) => {
+    try {
+        await callbacks.getPorId(req, res)
+    } catch (error) {
+        console.log(error);
+    }
+});
+
 // Exporto el módulo para poder usarlo en server
 module.exports = router;

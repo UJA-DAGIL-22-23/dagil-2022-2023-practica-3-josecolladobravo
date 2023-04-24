@@ -374,6 +374,47 @@ describe("Plantilla.cuerpoTr", function() {
     });
   });
 
+describe('Plantilla', function() {
+  it('debería actualizar la plantilla y el artículo', function() {
+    var jugador = { nombre: 'Juan', edad: 25 };
+    var msj = 'Mensaje de prueba';
+
+    spyOn(Plantilla.plantillaFormularioUnJugador, 'actualiza').and.returnValue(msj);
+    spyOn(Frontend.Article, 'actualizar');
+
+    expect(Plantilla.jugador(jugador)).toEqual(msj);
+    expect(Plantilla.plantillaFormularioUnJugador.actualiza).toHaveBeenCalledWith(jugador);
+    expect(Frontend.Article.actualizar).toHaveBeenCalledWith('Jugador/a elegido/a', msj);
+  });
+});
+
+describe('Plantilla', function() {
+  it('debería llamar al método "recupera" con el jugador siguiente', function() {
+    var jugador = { nombre: 'Juan', edad: 25 };
+    Plantilla.siguiente = 2;
+
+    spyOn(Plantilla, 'recupera');
+
+    Plantilla.jugadorSiguiente();
+
+    expect(Plantilla.recupera).toHaveBeenCalledWith(Plantilla.siguiente);
+  });
+});
+
+describe('Plantilla', function() {
+  it('debería llamar al método "recupera" con el jugador anterior', function() {
+    Plantilla.anterior = 1;
+
+    spyOn(Plantilla, 'recupera');
+
+    Plantilla.jugadorAnterior();
+
+    expect(Plantilla.recupera).toHaveBeenCalledWith(Plantilla.anterior);
+  });
+});
+
+
+
   
 
 /*

@@ -261,6 +261,7 @@ Plantilla.plantillaTablaPersonasTodosLosDatos.cabecera = `<table width="100%" cl
                         <th width="15%">Nacionalidad</th>
                         <th width="15%">Peso</th>
                         <th width="15%">Posición</th>
+                        <th width="10%">Acciones</th>
                     </thead>
                     <tbody>
     `;
@@ -290,6 +291,7 @@ Plantilla.plantillaTablaPersonasTodosLosDatos.cuerpo = `
         <td>${Plantilla.plantillaTagsTodosLosDatos.NACIONALIDAD}</td>
         <td>${Plantilla.plantillaTagsTodosLosDatos.PESO}</td>
         <td>${Plantilla.plantillaTagsTodosLosDatos.POSICION}</td>
+        <td><div><a href="javascript:Plantilla.mostrar('${Plantilla.plantillaTagsTodosLosDatos.ID}')" class="opcion-principal mostrar">Mostrar Jugador/a</a></div></td>
     </tr>
     `;
 
@@ -328,12 +330,10 @@ Plantilla.plantillaTablaPersonasTodosLosDatos.actualiza = function (persona) {
 Plantilla.listarTodosLosDatos = function (vector) {
     porCampo.style.display = 'none';
     
-    // Compongo el contenido que se va a mostrar dentro de la tabla
     let msj = Plantilla.plantillaTablaPersonasTodosLosDatos.cabecera
     vector.forEach(e => msj += Plantilla.plantillaTablaPersonasTodosLosDatos.actualiza(e))
     msj += Plantilla.plantillaTablaPersonasTodosLosDatos.pie
 
-    // Borro toda la info de Article y la sustituyo por la que me interesa
     Frontend.Article.actualizar("Listado de todos los datos de todos/as los/as jugadores/as", msj)
 }
 
@@ -426,4 +426,138 @@ Plantilla.cuerpoTr = function (p) {
     const fecha = new Date(d.fec_nac.anio, d.fec_nac.mes - 1, d.fec_nac.dia);
     const fechaFormateada = fecha.toLocaleDateString();
     return `<tr><td>${d.nombre}</td><td>${d.apellidos}</td><td>${fechaFormateada}</td><td>${d.competiciones}</td><td>${d.nacionalidad}</td><td>${d.peso}</td><td>${d.posicion}</td></tr>`;
+}
+
+/**
+ * Función que muestra los datos de un/a jugador/a
+ * @param {*} id ID del jugador que queremos mostrar los datos
+ */
+Plantilla.mostrar = function (id) {
+    this.obtieneJugador(id, this.jugador)
+}
+
+/**
+ * Función que obtiene los datos de un/a jugador/a
+ * @param {*} id id del jugador/a que queremos mostrar los datos
+ * @param {*} callBackFn Función que se va a llamara cuando recuperemos al jugador/a
+ */
+Plantilla.obtieneJugador = async function (id, callBackFn) {
+    try {
+        const url = Frontend.API_GATEWAY + "/plantilla/getPorId/" + id
+        const response = await fetch(url);
+        if (response) {
+            const jugador = await response.json()
+            callBackFn(jugador)
+        }
+    } catch (error) {
+        alert("Error: No se han podido acceder al API Gateway")
+        console.error(error)
+    }
+}
+
+/**
+ * Función para actualizar la página web con los datos de un/a jugador/a
+ * @param {*} jugador Datos del jugador/a que queremos mostrar
+ */
+Plantilla.jugador = function (jugador) {
+
+    let msj = Plantilla.plantillaFormularioUnJugador.actualiza(jugador)
+    Frontend.Article.actualizar("Jugador/a elegido/a", msj)
+    return msj;
+}
+
+/// Plantilla para poner los datos de un/a jugado/a
+Plantilla.plantillaFormularioUnJugador = {}
+
+// Formulario para mostrar los datos de un/a jugador/a
+Plantilla.plantillaFormularioUnJugador.formulario = `
+<form method='post' action=''>
+    <table width="100%" class="listado-personas-SoloNombres">
+    <a href="javascript:Plantilla.jugadorAnterior()" class="opcion-principal mostrar">Anterior</a>
+    <a href="javascript:Plantilla.jugadorSiguiente()"  class="opcion-principal mostrar">Siguiente</a>
+        <thead>
+            <th width="10%">Id</th>
+            <th width="20%">Nombre</th>
+            <th width="20%">Apellidos</th>
+            <th width="20%">Fecha de nacimiento</th>
+            <th width="20%">Competiciones</th>
+            <th width="20%">Nacionalidad</th>
+            <th width="20%">Peso</th>
+            <th width="20%">Posición</th>
+        </thead>
+        <tbody>
+            <tr title="${Plantilla.plantillaTagsTodosLosDatos.ID}">
+                <td><input type="text" class="form-persona-elemento" disabled id="idJugador" value="${Plantilla.plantillaTagsTodosLosDatos.ID}" name="id"/></td>
+                <td>${Plantilla.plantillaTagsTodosLosDatos.NOMBRE}</td>
+                <td>${Plantilla.plantillaTagsTodosLosDatos.APELLIDOS}</td>
+                <td>${Plantilla.plantillaTagsTodosLosDatos.FEC_NAC}</td>
+                <td>${Plantilla.plantillaTagsTodosLosDatos.COMPETICIONES}</td>
+                <td>${Plantilla.plantillaTagsTodosLosDatos.NACIONALIDAD}</td>
+                <td>${Plantilla.plantillaTagsTodosLosDatos.PESO}</td>
+                <td>${Plantilla.plantillaTagsTodosLosDatos.POSICION}</td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+`;
+
+/**
+ * Función que actualiza un/a jugador/as en la plantilla del formulario
+ * @param {*} jugador La información del jugador/a que queremos mostrar
+ * @returns 
+ */
+Plantilla.plantillaFormularioUnJugador.actualiza = function (jugador) {
+
+    return Plantilla.sustituyeTagsTodosLosDatos(this.formulario, jugador)
+}
+
+// Función que nos muestra el/la siguiente jugador/a de la base de datos
+Plantilla.jugadorSiguiente = function () {
+    Plantilla.recupera(this.siguiente)
+}
+
+// Función que nos muestra el/la anterior jugador/a de la base de datos
+Plantilla.jugadorAnterior = function () {
+    Plantilla.recupera(this.anterior)
+}
+
+// Función que nos muestra el/la siguiente jugador/a de la base de datos
+Plantilla.siguiente = function (vector) {
+    let pos
+    let indices = []
+    if (Array.isArray(vector)) {
+        for (let i = 0; i < vector.length; i++) {
+            indices.push(vector[i].ref['@ref'].id)
+        }
+    }
+    if (indices.length > 1)
+        pos = indices.indexOf(document.getElementById("idJugador").value)
+    if (typeof pos === "number") {
+        pos++
+        pos = (pos % vector.length + vector.length) % vector.length;
+        Plantilla.mostrar(indices[pos])
+    } else
+        Plantilla.sustituyeTagsTodosLosDatos(Plantilla.plantillaFormularioUnJugador.formulario)
+    return indices
+}
+
+// Función que nos muestra el/la anterior jugador/a de la base de datos
+Plantilla.anterior = function (vector) {
+    let pos
+    let indices = []
+    if (Array.isArray(vector)) {
+        for (let i = 0; i < vector.length; i++) {
+            indices.push(vector[i].ref['@ref'].id)
+        }
+    }
+    if (indices.length > 1)
+        pos = indices.indexOf(document.getElementById("idJugador").value)
+    if (typeof pos === "number") {
+        console.log(pos)
+        pos--
+        pos = (pos % vector.length + vector.length) % vector.length;
+        Plantilla.mostrar(indices[pos])
+    } else
+        Plantilla.sustituyeTagsTodosLosDatos(Plantilla.plantillaFormularioUnJugador.formulario)
+    return indices
 }
