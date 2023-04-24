@@ -144,6 +144,7 @@ Plantilla.mostrarAcercaDe = function (datosDescargados) {
  */
 Plantilla.procesarHome = function () {
     porCampo.style.display = 'none';
+    porNombre.style.display = 'none';
     this.descargarRuta("/plantilla/", this.mostrarHome);
 }
 
@@ -152,6 +153,7 @@ Plantilla.procesarHome = function () {
  */
 Plantilla.procesarAcercaDe = function () {
     porCampo.style.display = 'none';
+    porNombre.style.display = 'none';
     this.descargarRuta("/plantilla/acercade", this.mostrarAcercaDe);
 }
 
@@ -220,6 +222,7 @@ Plantilla.imprimeSoloNombresOrdenados = function (vector) {
  */
 Plantilla.listarSoloNombres = function () {
     porCampo.style.display = 'none';
+    porNombre.style.display = 'none';
     Plantilla.recupera(Plantilla.imprimeSoloNombres);
 }
 
@@ -228,6 +231,7 @@ Plantilla.listarSoloNombres = function () {
  */
 Plantilla.listarSoloNombresOrdenados = function () {
     porCampo.style.display = 'none';
+    porNombre.style.display = 'none';
     Plantilla.recupera(Plantilla.imprimeSoloNombresOrdenados);
 }
 
@@ -329,6 +333,7 @@ Plantilla.plantillaTablaPersonasTodosLosDatos.actualiza = function (persona) {
 
 Plantilla.listarTodosLosDatos = function (vector) {
     porCampo.style.display = 'none';
+    porNombre.style.display = 'none';
     
     let msj = Plantilla.plantillaTablaPersonasTodosLosDatos.cabecera
     vector.forEach(e => msj += Plantilla.plantillaTablaPersonasTodosLosDatos.actualiza(e))
@@ -341,6 +346,7 @@ Plantilla.listarTodosLosDatos = function (vector) {
  * Función principal para recuperar todo los datos de todos/as los/as jugadores/as desde el MS y, posteriormente, imprimirlas.
  */
 Plantilla.listarTodoLosDatos = function () {
+    porNombre.style.display = 'none';
     Plantilla.recupera(Plantilla.listarTodosLosDatos);
 }
 
@@ -350,6 +356,7 @@ Plantilla.listarTodoLosDatos = function () {
 Plantilla.ordenarPor = function () {
     const porCampo = document.querySelector('#porCampo');
     porCampo.style.display = 'block';
+    porNombre.style.display = 'none';
 
     porCampo.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -560,4 +567,57 @@ Plantilla.anterior = function (vector) {
     } else
         Plantilla.sustituyeTagsTodosLosDatos(Plantilla.plantillaFormularioUnJugador.formulario)
     return indices
+}
+
+/**
+ * Función que busca un/a jugador/a por su nombre
+ */
+Plantilla.buscarPorNombre = function () {
+    porNombre.style.display = 'block';
+    porCampo.style.display = 'none';
+}
+
+/**
+ * Función que busca a un/a jugador/a por un nombre.
+ * @returns True
+ */
+Plantilla.buscaPorNombre = function (buscarNombre) {
+    this.recuperaPorNombre(buscarNombre, this.imprime);
+}
+
+/**
+ * Función que filtrará los datos de la base de datos por nombre.
+ * @param {función} callBackFn Función a la que se llamará una vez recibidos los datos.
+ */
+Plantilla.recuperaPorNombre = async function (buscarNombre, callBackFn) {
+    let response = null
+
+    try {
+        const url = Frontend.API_GATEWAY + "/plantilla/getTodas"
+        response = await fetch(url)
+
+    } catch (error) {
+        alert("Error: No se han podido acceder al API Gateway")
+        console.error(error)
+    }
+
+    let vectorPersonas = null
+    if (response) {
+        vectorPersonas = await response.json()
+        const filtro = vectorPersonas.data.filter(persona => persona.data.nombre === buscarNombre);
+        callBackFn(filtro)
+    }
+}
+
+/**
+ * Función que nos muestra un/a jugador/a de la base de datos
+ * @param {Vector_de_persona} vector Vector con los datos de los plantilla a mostrar
+ */
+Plantilla.imprime = function (vector) {
+    let msj = "";
+    msj += Plantilla.plantillaTablaPersonasTodosLosDatosSINID.cabecera;
+    vector.forEach(e => msj += Plantilla.cuerpoTr(e))
+    msj += Plantilla.plantillaTagsTodosLosDatos.pie;
+
+    Frontend.Article.actualizar( "Listado de jugadores/as por nombre", msj )
 }

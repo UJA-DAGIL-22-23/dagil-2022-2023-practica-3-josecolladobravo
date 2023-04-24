@@ -412,9 +412,6 @@ describe('Plantilla', function() {
     expect(Plantilla.recupera).toHaveBeenCalledWith(Plantilla.anterior);
   });
 });
-
-
-
   
 
 /*

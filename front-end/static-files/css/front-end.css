@@ -114,4 +114,22 @@
   .btn-primary:hover {
     background-color: #0069d9;
   }
+
+  input[type="text"] {
+    border: none;
+    border-bottom: 2px solid #ddd;
+    background-color: transparent;
+    color: #ddd;
+    font-size: 18px;
+    padding: 10px;
+    width: 100%;
+  }
+  
+  input[type="text"]:focus {
+    outline: none;
+    border-color: #65bce8;
+    box-shadow: 0 0 10px #65bce8;
+  }
+  
+  
   
