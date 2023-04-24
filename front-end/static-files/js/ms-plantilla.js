@@ -145,6 +145,7 @@ Plantilla.mostrarAcercaDe = function (datosDescargados) {
 Plantilla.procesarHome = function () {
     porCampo.style.display = 'none';
     porNombre.style.display = 'none';
+    porMinimoUnCriterio.style.display = 'none';
     this.descargarRuta("/plantilla/", this.mostrarHome);
 }
 
@@ -154,6 +155,7 @@ Plantilla.procesarHome = function () {
 Plantilla.procesarAcercaDe = function () {
     porCampo.style.display = 'none';
     porNombre.style.display = 'none';
+    porMinimoUnCriterio.style.display = 'none';
     this.descargarRuta("/plantilla/acercade", this.mostrarAcercaDe);
 }
 
@@ -223,6 +225,7 @@ Plantilla.imprimeSoloNombresOrdenados = function (vector) {
 Plantilla.listarSoloNombres = function () {
     porCampo.style.display = 'none';
     porNombre.style.display = 'none';
+    porMinimoUnCriterio.style.display = 'none';
     Plantilla.recupera(Plantilla.imprimeSoloNombres);
 }
 
@@ -232,6 +235,7 @@ Plantilla.listarSoloNombres = function () {
 Plantilla.listarSoloNombresOrdenados = function () {
     porCampo.style.display = 'none';
     porNombre.style.display = 'none';
+    porMinimoUnCriterio.style.display = 'none';
     Plantilla.recupera(Plantilla.imprimeSoloNombresOrdenados);
 }
 
@@ -334,6 +338,7 @@ Plantilla.plantillaTablaPersonasTodosLosDatos.actualiza = function (persona) {
 Plantilla.listarTodosLosDatos = function (vector) {
     porCampo.style.display = 'none';
     porNombre.style.display = 'none';
+    porMinimoUnCriterio.style.display = 'none';
     
     let msj = Plantilla.plantillaTablaPersonasTodosLosDatos.cabecera
     vector.forEach(e => msj += Plantilla.plantillaTablaPersonasTodosLosDatos.actualiza(e))
@@ -347,6 +352,7 @@ Plantilla.listarTodosLosDatos = function (vector) {
  */
 Plantilla.listarTodoLosDatos = function () {
     porNombre.style.display = 'none';
+    porMinimoUnCriterio.style.display = 'none';
     Plantilla.recupera(Plantilla.listarTodosLosDatos);
 }
 
@@ -357,6 +363,7 @@ Plantilla.ordenarPor = function () {
     const porCampo = document.querySelector('#porCampo');
     porCampo.style.display = 'block';
     porNombre.style.display = 'none';
+    porMinimoUnCriterio.style.display = 'none';
 
     porCampo.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -575,11 +582,11 @@ Plantilla.anterior = function (vector) {
 Plantilla.buscarPorNombre = function () {
     porNombre.style.display = 'block';
     porCampo.style.display = 'none';
+    porMinimoUnCriterio.style.display = 'none';
 }
 
 /**
  * Función que busca a un/a jugador/a por un nombre.
- * @returns True
  */
 Plantilla.buscaPorNombre = function (buscarNombre) {
     this.recuperaPorNombre(buscarNombre, this.imprime);
@@ -620,4 +627,57 @@ Plantilla.imprime = function (vector) {
     msj += Plantilla.plantillaTagsTodosLosDatos.pie;
 
     Frontend.Article.actualizar( "Listado de jugadores/as por nombre", msj )
+}
+
+/**
+ * Función que nos muestra un/a jugador/a de la base de datos
+ * @param {Vector_de_persona} vector Vector con los datos de los plantilla a mostrar
+ */
+Plantilla.imprimeMinimoUnCriterio = function (vector) {
+    let msj = "";
+    msj += Plantilla.plantillaTablaPersonasTodosLosDatosSINID.cabecera;
+    vector.forEach(e => msj += Plantilla.cuerpoTr(e))
+    msj += Plantilla.plantillaTagsTodosLosDatos.pie;
+
+    Frontend.Article.actualizar( "Listado de jugadores/as por mínimo un criterio", msj )
+}
+
+/**
+ * Función que busca un/a jugador/a por mínimo un criterio.
+ */
+Plantilla.buscarPorUnCriterioMinimo = function () {
+    porNombre.style.display = 'none';
+    porCampo.style.display = 'none';
+    porMinimoUnCriterio.style.display = 'block';
+}
+
+/**
+ * Función para buscar a un/a jugador/a por mínimo un criterio.
+ */
+Plantilla.buscarMinimoUnCriterio = function (nombre,apellidos,nacionalidad,posicion) {
+    this.recuperaPorMinimoUnCriterio(nombre,apellidos,nacionalidad,posicion,this.imprimeMinimoUnCriterio);
+}
+
+/**
+ * Función que filtrará los datos de la base de datos por mínimo un criterio.
+ * @param {función} callBackFn Función a la que se llamará una vez recibidos los datos.
+ */
+Plantilla.recuperaPorMinimoUnCriterio = async function (nombre2,apellidos2,nacionalidad2,posicion2,callBackFn) {
+    let response = null
+
+    try {
+        const url = Frontend.API_GATEWAY + "/plantilla/getTodas"
+        response = await fetch(url)
+
+    } catch (error) {
+        alert("Error: No se han podido acceder al API Gateway")
+        console.error(error)
+    }
+    
+    let vectorPersonas = null
+    if (response) {
+        vectorPersonas = await response.json()
+        const filtro = vectorPersonas.data.filter(persona => persona.data.nombre === nombre2 || persona.data.apellidos === apellidos2 || persona.data.nacionalidad === nacionalidad2 || persona.data.posicion === posicion2);
+        callBackFn(filtro)
+    }
 }

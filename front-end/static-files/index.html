@@ -35,6 +35,8 @@
         title="Listar por el campo que el usuario desee">Ordenar Por...</a>
         <a href="javascript:Plantilla.buscarPorNombre()" class="opcion-principal mostrar" 
         title="Buscar un/a jugador/a de la base de datos por el nombre">Buscar Por Nombre</a>
+        <a href="javascript:Plantilla.buscarPorUnCriterioMinimo()" class="opcion-principal mostrar" 
+        title="Buscar un/a jugador/a de la base de datos por mínimo un criterio">Buscar por mínimo un criterio</a>
 
         <div id="porNombre" style="display: none;">
           <form class="form">
@@ -51,7 +53,6 @@
           </form>
         </div>
         
-
         <div id="porCampo" style="display: none;">
             <form class="form">
               <div class="form-header">
@@ -70,6 +71,23 @@
               </div>
               <div class="form-group">
                 <button type="submit" id="boton-aceptar" class="opcion-principal mostrar">Listar</button>
+              </div>
+            </form>
+          </div>
+
+          <div id="porMinimoUnCriterio" style="display: none;">
+            <form class="form">
+              <div class="form-header">
+                <h2>Busca por un criterio mínimo</h2>
+              </div>
+              <div class="form-group">
+                <input type="text" id="nombre" name="nombre" placeholder="Nombre">
+                <input type="text" id="apellidos" name="apellidos" placeholder="Apellidos">
+                <input type="text" id="nacionalidad" name="nacionalidad" placeholder="Nacionalidad">
+                <input type="text" id="posicion" name="posicion" placeholder="Posicion">
+              </div>
+              <div class="form-group">
+                <button class="opcion-principal mostrar" type="button" onclick="buscarPorMinimoUnCriterio()">Buscar</button>
               </div>
             </form>
           </div>
@@ -98,6 +116,16 @@
     <!-- Cargamos ficheros JS propios del proyecto -->
     <script src="js/front-end.js"></script>
     <script src="js/ms-plantilla.js"></script>
+
+    <script>
+      function buscarPorMinimoUnCriterio() {
+          var nombre1 = document.getElementById("nombre").value;
+          var apellidos1 = document.getElementById("apellidos").value;
+          var nacionalidad1 = document.getElementById("nacionalidad").value;
+          var posicion1 = document.getElementById("posicion").value;
+          Plantilla.buscarMinimoUnCriterio(nombre1,apellidos1,nacionalidad1,posicion1);
+      }
+  </script>
 
     <script>
       function buscarPorNombre() {
