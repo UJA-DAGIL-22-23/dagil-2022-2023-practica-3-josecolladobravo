@@ -386,3 +386,110 @@ Ordenar por Fecha de Nacimiento:
 <img src='assets/img/OrdenarPorFec_Nac.png' width='600px'>
 
 Y hasta aquí el primer incremento. Vamos con el segundo.
+
+## Incremento 2
+
+Para este segundo incremento, he seleccionado las H.U de la 6 a la 11.
+
+<img src='assets/img/SegundoIncrementoTrello1.png' width='600px'>
+
+<img src='assets/img/SegundoIncrementoTrello2.png' width='600px'>
+
+Y a continuación voy a mostrar cada historia de usuario por dentro con su descripción y criterios de aceptación.
+
+### Historia de usuario 6
+
+<img src='assets/img/HU6.png' width='600px'>
+
+### Historia de usuario 7
+
+<img src='assets/img/HU7.png' width='600px'>
+
+### Historia de usuario 8
+
+<img src='assets/img/HU8.png' width='600px'>
+
+### Historia de usuario 9
+
+<img src='assets/img/HU9.png' width='600px'>
+
+### Historia de usuario 10
+
+<img src='assets/img/HU10.png' width='600px'>
+
+### Historia de usuario 11
+
+<img src='assets/img/HU11.png' width='600px'>
+
+Estas son las seis historias de usuario que he seleccionado para el segundo incremento. 
+
+Una vez hechas, el trello queda así: 
+
+### Foto Trello 1
+<img src='assets/img/SegundoIncrementoFinalTrello.png' width='600px'>
+
+### Foto Trello 2
+<img src='assets/img/SegundoIncrementoFinalTrello2.png' width='600px'>
+
+### Foto Trello 3
+<img src='assets/img/SegundoIncrementoFinalTrello3.png' width='600px'>
+
+### Foto Trello 4
+<img src='assets/img/SegundoIncrementoFinalTrello4.png' width='600px'>
+
+Las historias de usuario seleccionadas para este primer incremento se han quedado así:
+
+### H.U 6
+6. Ver todos los datos de un determinado jugador/a. VALOR: 0.2
+
+<img src='assets/img/PantallaUnJugador.png' width='600px'>
+<img src='assets/img/MostrarUnJugador.png' width='600px'>
+<img src='assets/img/BotonMostrarUnJugador.png' width='600px'>
+
+### H.U 7
+7. Ver los datos de un/a determinado/a jugador/a, cambiando con un solo click para ver los datos del anterior o del siguiente. VALOR: 0.4
+
+<img src='assets/img/Siguiente.png' width='600px'>
+<img src='assets/img/Anterior.png' width='600px'>
+
+### H.U 8
+8. Ver un listado de todos los datos de jugadores/as cuyo nombre cumple con un criterio de búsqueda indicado por el usuario. VALOR: 0.5
+
+<img src='assets/img/InputBuscarPorNombre.png' width='600px'>
+<img src='assets/img/BusquedaDeUnJugador.png' width='600px'>
+<img src='assets/img/BuscarUnJugador.png' width='600px'>
+<img src='assets/img/BuscarPorNombre.png' width='600px'>
+
+### H.U 9
+9. Ver un listado de todos los datos de jugadores/as que cumplen con un criterio de búsqueda indicado por el usuario para alguno de sus otros campos distintos del nombre. Se deberá poder buscar al menos por 3 campos distintos (además del nombre). VALOR: 0.6
+
+<img src='assets/img/BuscarUnCriterioMedio.png' width='600px'>
+<img src='assets/img/BuscarUnCriterio3.png' width='600px'>
+<img src='assets/img/BuscarUnCriterio2.png' width='600px'>
+<img src='assets/img/BuscarPorUnCriterioMinimo.png' width='600px'>
+
+### H.U 10
+10. Ver un listado de todos los datos de jugadores/as que cumplen simultáneamente con varios criterios de búsqueda indicados por el usuario para algunos de sus campos. Se deberá poder buscar al menos por 3 campos distintos (además del nombre). VALOR: 0.7
+
+<img src='assets/img/BuscaPorCuatroCriterios4.png' width='600px'>
+<img src='assets/img/BuscaPorCuatroCriterios3.png' width='600px'>
+<img src='assets/img/BuscaPorCuatroCriterios2.png' width='600px'>
+<img src='assets/img/BuscaPorCuatroCriterios.png' width='600px'>
+
+### H.U 11
+11. Ver un listado de todos los datos de jugadores/as que cumplen al menos con uno de un conjunto de criterios de búsqueda indicado por el usuario para algunos de sus campos. Se deberá poder buscar al menos por 3 campos distintos (además del nombre). VALOR: 0.6
+
+<img src='assets/img/BuscarVariosCriterios2.png' width='600px'>
+<img src='assets/img/BuscarVariosCriterios.png' width='600px'>
+<img src='assets/img/BuscarPorUnCriterioMinimo.png' width='600px'>
+
+### Pruebas TDD
+
+Adjunto una foto de como se ve el panel de Jasmine en el navegador aunque en la versión final he comentado las pruebas para que no salgan en el navegador y que el usuario solo vea la aplicación. (Si se quieren ver las pruebas basta con solo descomentarlas en el archivo index.html)
+
+<img src='assets/img/TDD.png' width='600px'>
+<img src='assets/img/TDD3.png' width='600px'>
+<img src='assets/img/TDD2.png' width='600px'>
+
+
+Y hasta aquí el segundo incremento.

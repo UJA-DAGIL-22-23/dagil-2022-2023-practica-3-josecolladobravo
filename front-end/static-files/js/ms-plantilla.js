@@ -42,7 +42,7 @@ Plantilla.plantillaTablaPersonasTodosLosDatosSoloNombres.cuerpo = `
         </td>
     </tr>
     `;
-    
+
 // Pie de la tabla
 Plantilla.plantillaTablaPersonasTodosLosDatosSoloNombres.pie = `        </tbody>
              </table>
@@ -53,11 +53,11 @@ Plantilla.plantillaTablaPersonasTodosLosDatosSoloNombres.pie = `        </tbody>
  * @param {String} Plantilla Cadena conteniendo HTML en la que se desea cambiar lso campos de la plantilla por datos
  * @param {Persona} Persona Objeto con los datos de la persona que queremos escribir en el TR
  * @returns La plantilla del cuerpo de la tabla con los datos actualizados 
- */           
+ */
 Plantilla.sustituyeTagsTodosLosDatosSoloNombres = function (plantilla, persona) {
     return plantilla
         .replace(new RegExp(Plantilla.plantillaTagsSoloNombres.NOMBRE, 'g'), persona.data.nombre)
-}             
+}
 
 /**
  * Actualiza el cuerpo de la tabla con los datos de la persona que se le pasa
@@ -82,7 +82,6 @@ Plantilla.descargarRuta = async function (ruta, callBackFn) {
         response = await fetch(url)
 
     } catch (error) {
-        alert("Error: No se han podido acceder al API Gateway")
         console.error(error)
     }
 
@@ -146,6 +145,7 @@ Plantilla.procesarHome = function () {
     porCampo.style.display = 'none';
     porNombre.style.display = 'none';
     porMinimoUnCriterio.style.display = 'none';
+    porCuatroCriterios.style.display = 'none';
     this.descargarRuta("/plantilla/", this.mostrarHome);
 }
 
@@ -156,6 +156,7 @@ Plantilla.procesarAcercaDe = function () {
     porCampo.style.display = 'none';
     porNombre.style.display = 'none';
     porMinimoUnCriterio.style.display = 'none';
+    porCuatroCriterios.style.display = 'none';
     this.descargarRuta("/plantilla/acercade", this.mostrarAcercaDe);
 }
 
@@ -173,7 +174,6 @@ Plantilla.recupera = async function (callBackFn) {
         response = await fetch(url)
 
     } catch (error) {
-        alert("Error: No se han podido acceder al API Gateway")
         console.error(error)
     }
 
@@ -226,6 +226,7 @@ Plantilla.listarSoloNombres = function () {
     porCampo.style.display = 'none';
     porNombre.style.display = 'none';
     porMinimoUnCriterio.style.display = 'none';
+    porCuatroCriterios.style.display = 'none';
     Plantilla.recupera(Plantilla.imprimeSoloNombres);
 }
 
@@ -236,6 +237,7 @@ Plantilla.listarSoloNombresOrdenados = function () {
     porCampo.style.display = 'none';
     porNombre.style.display = 'none';
     porMinimoUnCriterio.style.display = 'none';
+    porCuatroCriterios.style.display = 'none';
     Plantilla.recupera(Plantilla.imprimeSoloNombresOrdenados);
 }
 
@@ -274,7 +276,7 @@ Plantilla.plantillaTablaPersonasTodosLosDatos.cabecera = `<table width="100%" cl
                     <tbody>
     `;
 
- // Cabecera de la tabla que muestra todos los datos de todos/as los/as jugadores/as
+// Cabecera de la tabla que muestra todos los datos de todos/as los/as jugadores/as
 Plantilla.plantillaTablaPersonasTodosLosDatosSINID.cabecera = `<table width="100%" class="listado-personas-SoloNombres">
 <thead>
     <th width="20%">Nombre</th>
@@ -286,7 +288,7 @@ Plantilla.plantillaTablaPersonasTodosLosDatosSINID.cabecera = `<table width="100
     <th width="15%">Posición</th>
 </thead>
 <tbody>
-`;   
+`;
 
 // Elemento TR que muestra todos los datos de todos/as los/as jugadores/as
 Plantilla.plantillaTablaPersonasTodosLosDatos.cuerpo = `
@@ -313,7 +315,7 @@ Plantilla.plantillaTablaPersonasTodosLosDatos.pie = `        </tbody>
  * @param {String} Plantilla Cadena conteniendo HTML en la que se desea cambiar los campos de la plantilla por datos
  * @param {Persona} Persona Objeto con los datos del jugador/as que queremos escribir en el TR
  * @returns La plantilla del cuerpo de la tabla con los datos actualizados 
- */           
+ */
 Plantilla.sustituyeTagsTodosLosDatos = function (plantilla, persona) {
     return plantilla
         .replace(new RegExp(Plantilla.plantillaTagsTodosLosDatos.ID, 'g'), persona.ref['@ref'].id)
@@ -324,7 +326,7 @@ Plantilla.sustituyeTagsTodosLosDatos = function (plantilla, persona) {
         .replace(new RegExp(Plantilla.plantillaTagsTodosLosDatos.POSICION, 'g'), persona.data.posicion)
         .replace(new RegExp(Plantilla.plantillaTagsTodosLosDatos.COMPETICIONES, 'g'), persona.data.competiciones)
         .replace(new RegExp(Plantilla.plantillaTagsTodosLosDatos.FEC_NAC, 'g'), persona.data.fec_nac.dia + "/" + persona.data.fec_nac.mes + "/" + persona.data.fec_nac.anio)
-}            
+}
 
 /**
  * Actualiza el cuerpo de la tabla con todos los datos de todos/as los/as jugadores/as que se le pasa
@@ -339,7 +341,8 @@ Plantilla.listarTodosLosDatos = function (vector) {
     porCampo.style.display = 'none';
     porNombre.style.display = 'none';
     porMinimoUnCriterio.style.display = 'none';
-    
+    porCuatroCriterios.style.display = 'none';
+
     let msj = Plantilla.plantillaTablaPersonasTodosLosDatos.cabecera
     vector.forEach(e => msj += Plantilla.plantillaTablaPersonasTodosLosDatos.actualiza(e))
     msj += Plantilla.plantillaTablaPersonasTodosLosDatos.pie
@@ -353,6 +356,7 @@ Plantilla.listarTodosLosDatos = function (vector) {
 Plantilla.listarTodoLosDatos = function () {
     porNombre.style.display = 'none';
     porMinimoUnCriterio.style.display = 'none';
+    porCuatroCriterios.style.display = 'none';
     Plantilla.recupera(Plantilla.listarTodosLosDatos);
 }
 
@@ -364,6 +368,7 @@ Plantilla.ordenarPor = function () {
     porCampo.style.display = 'block';
     porNombre.style.display = 'none';
     porMinimoUnCriterio.style.display = 'none';
+    porCuatroCriterios.style.display = 'none';
 
     porCampo.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -386,7 +391,6 @@ Plantilla.muestraJugadoresOrdenadosPor = async function (campo, callBackFn) {
             callBackFn(campo, jugadores)
         }
     } catch (error) {
-        alert("Error: No se ha podido acceder al API Gateway")
         console.error(error)
     }
 }
@@ -404,21 +408,21 @@ Plantilla.imprimePor = function (campo, vector) {
             const fecha2 = new Date(b.data.fec_nac.anio, b.data.fec_nac.mes - 1, b.data.fec_nac.dia);
             if (fecha1 < fecha2) {
                 return -1;
-              } else {
+            } else {
                 return 1;
-              }
+            }
         } else if (campo === "peso") {
             if (a.data[campo] > b.data[campo]) {
                 return -1;
-              } else {
+            } else {
                 return 1;
-              }
+            }
         } else {
             if (a.data[campo] < b.data[campo]) {
                 return -1;
-              } else {
+            } else {
                 return 1;
-              }
+            }
         }
     });
 
@@ -464,7 +468,6 @@ Plantilla.obtieneJugador = async function (id, callBackFn) {
             callBackFn(jugador)
         }
     } catch (error) {
-        alert("Error: No se han podido acceder al API Gateway")
         console.error(error)
     }
 }
@@ -583,6 +586,7 @@ Plantilla.buscarPorNombre = function () {
     porNombre.style.display = 'block';
     porCampo.style.display = 'none';
     porMinimoUnCriterio.style.display = 'none';
+    porCuatroCriterios.style.display = 'none';
 }
 
 /**
@@ -604,7 +608,6 @@ Plantilla.recuperaPorNombre = async function (buscarNombre, callBackFn) {
         response = await fetch(url)
 
     } catch (error) {
-        alert("Error: No se han podido acceder al API Gateway")
         console.error(error)
     }
 
@@ -626,7 +629,7 @@ Plantilla.imprime = function (vector) {
     vector.forEach(e => msj += Plantilla.cuerpoTr(e))
     msj += Plantilla.plantillaTagsTodosLosDatos.pie;
 
-    Frontend.Article.actualizar( "Listado de jugadores/as por nombre", msj )
+    Frontend.Article.actualizar("Listado de jugadores/as por nombre", msj)
 }
 
 /**
@@ -639,7 +642,7 @@ Plantilla.imprimeMinimoUnCriterio = function (vector) {
     vector.forEach(e => msj += Plantilla.cuerpoTr(e))
     msj += Plantilla.plantillaTagsTodosLosDatos.pie;
 
-    Frontend.Article.actualizar( "Listado de jugadores/as por mínimo un criterio", msj )
+    Frontend.Article.actualizar("Listado de jugadores/as por mínimo un criterio", msj)
 }
 
 /**
@@ -649,20 +652,21 @@ Plantilla.buscarPorUnCriterioMinimo = function () {
     porNombre.style.display = 'none';
     porCampo.style.display = 'none';
     porMinimoUnCriterio.style.display = 'block';
+    porCuatroCriterios.style.display = 'none';
 }
 
 /**
  * Función para buscar a un/a jugador/a por mínimo un criterio.
  */
-Plantilla.buscarMinimoUnCriterio = function (nombre,apellidos,nacionalidad,posicion) {
-    this.recuperaPorMinimoUnCriterio(nombre,apellidos,nacionalidad,posicion,this.imprimeMinimoUnCriterio);
+Plantilla.buscarMinimoUnCriterio = function (nombre, apellidos, nacionalidad, posicion) {
+    this.recuperaPorMinimoUnCriterio(nombre, apellidos, nacionalidad, posicion, this.imprimeMinimoUnCriterio);
 }
 
 /**
  * Función que filtrará los datos de la base de datos por mínimo un criterio.
  * @param {función} callBackFn Función a la que se llamará una vez recibidos los datos.
  */
-Plantilla.recuperaPorMinimoUnCriterio = async function (nombre2,apellidos2,nacionalidad2,posicion2,callBackFn) {
+Plantilla.recuperaPorMinimoUnCriterio = async function (nombre2, apellidos2, nacionalidad2, posicion2, callBackFn) {
     let response = null
 
     try {
@@ -670,14 +674,63 @@ Plantilla.recuperaPorMinimoUnCriterio = async function (nombre2,apellidos2,nacio
         response = await fetch(url)
 
     } catch (error) {
-        alert("Error: No se han podido acceder al API Gateway")
         console.error(error)
     }
-    
+
     let vectorPersonas = null
     if (response) {
         vectorPersonas = await response.json()
         const filtro = vectorPersonas.data.filter(persona => persona.data.nombre === nombre2 || persona.data.apellidos === apellidos2 || persona.data.nacionalidad === nacionalidad2 || persona.data.posicion === posicion2);
         callBackFn(filtro)
     }
+}
+
+/**
+ * Función que busca un/a jugador/a por cuatro criterios.
+ */
+Plantilla.buscarHastaCuatroCriterios = function () {
+    porNombre.style.display = 'none';
+    porCampo.style.display = 'none';
+    porMinimoUnCriterio.style.display = 'none';
+    porCuatroCriterios.style.display = 'block';
+}
+
+/**
+ * Función para buscar a un/a jugador/a por cuatro criterios.
+ */
+Plantilla.buscarCuatroCriterios = function (nombre, apellidos, nacionalidad, posicion) {
+    this.recuperaPorCuatroCriterios(nombre, apellidos, nacionalidad, posicion, this.imprimeCuatroCriterios);
+}
+
+/**
+ * Función que filtrará los datos de la base de datos por cuatro criterios.
+ * @param {función} callBackFn Función a la que se llamará una vez recibidos los datos.
+ */
+Plantilla.recuperaPorCuatroCriterios = async function (nombre4, apellidos4, nacionalidad4, posicion4, callBackFn) {
+    let response = null
+
+    try {
+        const url = Frontend.API_GATEWAY + "/plantilla/getTodas"
+        response = await fetch(url)
+
+    } catch (error) {
+        //alert("Error: No se han podido acceder al API Gateway")
+        console.error(error)
+    }
+
+    let vectorPersonas = null
+    if (response) {
+        vectorPersonas = await response.json()
+        const filtro = vectorPersonas.data.filter(persona => persona.data.nombre === nombre4 && persona.data.apellidos === apellidos4 && persona.data.nacionalidad === nacionalidad4 && persona.data.posicion === posicion4);
+        callBackFn(filtro)
+    }
+}
+
+Plantilla.imprimeCuatroCriterios = function (vector) {
+    let msj = "";
+    msj += Plantilla.plantillaTablaPersonasTodosLosDatosSINID.cabecera;
+    vector.forEach(e => msj += Plantilla.cuerpoTr(e))
+    msj += Plantilla.plantillaTagsTodosLosDatos.pie;
+
+    Frontend.Article.actualizar("Listado de jugadores/as por cuatro criterios", msj)
 }
